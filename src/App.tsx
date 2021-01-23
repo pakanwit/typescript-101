@@ -1,26 +1,56 @@
 import React from 'react'
-import logo from './logo.svg'
-import './App.css'
+import { Layout } from 'antd'
+import {
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
+} from '@ant-design/icons'
+import MenuComponent from './components/Menu'
+import Config from './config'
+
+const { Header, Sider, Content } = Layout
+
+class SiderDemo extends React.Component {
+  state = {
+    collapsed: false,
+  };
+
+  onCollapse = (collapsed: boolean) => {
+    console.log(collapsed)
+    this.setState({ collapsed })
+  };
+
+  render() {
+    return (
+      <Layout style={{ minHeight: '100vh' }}>
+        <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
+          <MenuComponent menuConfig={Config.menuConfig} />
+        </Sider>
+        <Layout className="site-layout">
+          {/* <Header className="site-layout-background" style={{ padding: 0 }}>
+            {React.createElement(this.state.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+              className: 'trigger',
+              onClick: this.toggle,
+            })}
+          </Header> */}
+          <Content
+            className="site-layout-background"
+            style={{
+              margin: '24px 16px',
+              padding: 24,
+              minHeight: 280,
+            }}
+          >
+            Content
+          </Content>
+        </Layout>
+      </Layout>
+    )
+  }
+}
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  return <SiderDemo />
 }
 
 export default App
